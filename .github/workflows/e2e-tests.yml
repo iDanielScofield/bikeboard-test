@@ -3,9 +3,13 @@ on:
   workflow_dispatch:
     inputs:
       browser:
-        description: 'Escolha o navegador de sua preferência para os testes (chromium, firefox, webkit)'
+        type: choice
         required: true
-        default: 'chromium'
+        description: 'Select a browser'
+        options:
+            - chromium
+            - firefox
+            - webkit
 jobs:
   test:
     timeout-minutes: 60
