@@ -1,15 +1,25 @@
 name: E2E tests
+env:
+  local: http://localhost:3000
+  homolog: https://bikeboard-homolog.vercel.app
 on:
   workflow_dispatch:
     inputs:
+      environment:
+        type: choice
+        required: true
+        description: 'Select environment'
+        options:
+          - local
+          - homolog
       browser:
         type: choice
         required: true
         description: 'Select a browser'
         options:
-            - chromium
-            - firefox
-            - webkit
+          - chromium
+          - firefox
+          - webkit
 jobs:
   test:
     timeout-minutes: 60
@@ -24,7 +34,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
       - name: Run E2E tests
-        run: npx playwright test --project=${{ github.event.inputs.browser }}
+        run: BASE_URL=${{ github.envent.environment}} npx playwright test --project=${{ github.event.inputs.browser }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
