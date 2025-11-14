@@ -1,8 +1,8 @@
 name: E2E tests
 on:
-env:
-  local: http://localhost:3000
-  homolog: https://bikeboard-homolog.vercel.app
+  env:
+    local: http://localhost:3000
+    homolog: https://bikeboard-homolog.vercel.app
   workflow_dispatch:
     inputs:
       environment:
