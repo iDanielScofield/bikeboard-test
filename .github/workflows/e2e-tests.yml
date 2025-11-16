@@ -2,6 +2,12 @@ name: E2E tests
 on:
   workflow_dispatch:
     inputs:
+      target_environment:
+        type: environment
+        name: homolog # Especifica o ambiente de staging
+        url: https://bikeboard-homolog.vercel.app
+        name: local
+        url: http://localhost:3000
       # target_environment:
       #   type: environment
       #   required: true
@@ -25,11 +31,6 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    environment:
-      name: homolog # Especifica o ambiente de staging
-      url: https://bikeboard-homolog.vercel.app
-      name: local
-      url: http://localhost:3000
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -40,8 +41,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
       - name: Run E2E tests
-        run: echo "URL is ${{github.event.environment.url}}"
-        # run: BASE_URL=${{ vars.HOST }} npx playwright test --project=${{ github.event.inputs.browser }}
+        run: BASE_URL=${{ github.event.inputs.target_environment }} npx playwright test --project=${{ github.event.inputs.browser }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
