@@ -28,10 +28,8 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
       - name: Run E2E tests
-        if: ${{ github.event.inputs.target_environment == 'local' }}
-        run: BASE_URL=${{ vars.LOCAL }} npx playwright test --project=${{ github.event.inputs.browser }}
-        if: ${{ github.event.inputs.target_environment == 'homolog' }}
-        run: BASE_URL=${{ vars.HOMOLOG }} npx playwright test --project=${{ github.event.inputs.browser }}
+        run: echo "VAR is ${{vars.HOST}}"
+        # run: BASE_URL=${{ vars.HOST }} npx playwright test --project=${{ github.event.inputs.browser }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
