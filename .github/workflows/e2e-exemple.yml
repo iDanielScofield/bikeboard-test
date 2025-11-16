@@ -5,10 +5,7 @@ on:
     inputs:
       ambiente_destino:
         description: 'Digite o nome do ambiente (ex: staging, production)'
-        type: choice
-        options: 
-          - homolog
-          - local
+        type: text
         required: true
         default: homolog
 
