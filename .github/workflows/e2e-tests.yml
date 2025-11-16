@@ -1,12 +1,12 @@
 name: E2E tests
-env:
-  local: http://localhost:3000
-  homolog: https://bikeboard-homolog.vercel.app
 on:
+  env:
+    local: http://localhost:3000
+    homolog: https://bikeboard-homolog.vercel.app
   workflow_dispatch:
     inputs:
-      environment:
-        type: choice
+      target_environment:
+        type: environment
         required: true
         description: 'Select environment'
         options:
@@ -34,7 +34,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
       - name: Run E2E tests
-        run: BASE_URL=${{ github.event.environment}} npx playwright test --project=${{ github.event.inputs.browser }}
+        run: BASE_URL=${{ github.event.inputs.target_environment}} npx playwright test --project=${{ github.event.inputs.browser }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
