@@ -28,7 +28,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
       - name: Run E2E tests
-        run: echo "VAR is ${{vars.HOST}}"
+        run: echo "VAR is ${{vars.VAR}}"
         # run: BASE_URL=${{ vars.HOST }} npx playwright test --project=${{ github.event.inputs.browser }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
