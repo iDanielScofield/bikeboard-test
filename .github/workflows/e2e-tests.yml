@@ -1,24 +1,17 @@
 name: E2E tests
 on:
   workflow_dispatch:
+    env:
+      HOMOLOG: https://bikeboard-homolog.vercel.app
+      LOCAL: http://localhost:3000
     inputs:
-      target_environment:
-        type: environment
-        name: homolog # Especifica o ambiente de staging
-        url: https://bikeboard-homolog.vercel.app
-        name: local
-        url: http://localhost:3000
-      # target_environment:
-      #   type: environment
-      #   required: true
-      #   description: 'Select environment'
       target_environment:
         type: choice
         required: true
         description: 'Select environment'
         options:
-          - homolog
-          - local
+          - $HOMOLOG
+          - $LOCAL
       browser:
         type: choice
         required: true
