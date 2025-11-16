@@ -1,0 +1,34 @@
+name: Deploy Manual com Texto e Validação
+
+on:
+  workflow_dispatch:
+    inputs:
+      ambiente_destino:
+        description: 'Digite o nome do ambiente (ex: staging, production)'
+        type: choice
+        options: 
+          - homolog
+          - local
+        required: true
+        default: homolog
+
+jobs:
+  validate_input:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar se o ambiente digitado é permitido
+        run: |
+          AMBIENTE_DIGITADO="${{ github.event.inputs.ambiente_destino }}"
+          LISTA_PERMITIDOS="${{ vars.AMBIENTES_PERMITIDOS }}" # Pega a variável do repositório
+
+          if [[ " ${LISTA_PERMITIDOS} " =~ " ${AMBIENTE_DIGITADO} " ]]; then
+            echo "::notice:: Ambiente válido: $AMBIENTE_DIGITADO"
+          else
+            echo "::error:: Ambiente inválido! Digite um dos seguintes: $LISTA_PERMITIDOS"
+            exit 1 # Falha no workflow se o input for inválido
+          fi
+          
+      - name: Fazer deploy (só executa se a validação passar)
+        run: |
+          echo "Iniciando deploy para ${{ github.event.inputs.ambiente_destino }}..."
+
