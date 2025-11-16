@@ -30,7 +30,7 @@ jobs:
       - name: Run E2E tests
         if: ${{ github.event.inputs.target_environment == 'local' }}
         run: BASE_URL=${{ vars.LOCAL }} npx playwright test --project=${{ github.event.inputs.browser }}
-        if: ${{ github.event.inputs.target_environment == 'local' }}
+        if: ${{ github.event.inputs.target_environment == 'homolog' }}
         run: BASE_URL=${{ vars.HOMOLOG }} npx playwright test --project=${{ github.event.inputs.browser }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
