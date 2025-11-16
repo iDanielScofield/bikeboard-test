@@ -34,9 +34,9 @@ jobs:
         with:
           node-version: lts/*
       - name: Install dependencies
-        # run: npm install
+        run: npm install
       - name: Install Playwright Browsers
-        # run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
+        run: npx playwright install --with-deps ${{ github.event.inputs.browser }}
       - name: Run E2E tests
         run: echo "VAR is ${{github.event.inputs.target_environment}}"
         # run: BASE_URL=${{ vars.HOST }} npx playwright test --project=${{ github.event.inputs.browser }}
